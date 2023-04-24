@@ -25,30 +25,15 @@ class Aassignemt_runnerCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputMappingContext* DefaultMappingContext;
 
-	/** Jump Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* JumpAction;
-
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
-
-	/** Look Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* LookAction;
 
 public:
 	Aassignemt_runnerCharacter();
 	
 	void Move(const FInputActionValue& Value);
-
-protected:
-
-	/** Called for movement input */
-
-	/** Called for looking input */
-	void Look(const FInputActionValue& Value);
-			
+	
 
 protected:
 	// APawn interface
@@ -57,11 +42,17 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 	
+	virtual void Tick(float DeltaTime) override;
+	
 	
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+private:
+	FVector startLocation;
+	FVector currentLocation;
 };
 

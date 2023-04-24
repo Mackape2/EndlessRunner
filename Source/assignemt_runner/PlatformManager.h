@@ -17,15 +17,24 @@ public:
 	APlatformManager();
 	UPROPERTY(EditAnywhere)
 		TArray<TSubclassOf<AActor>>LevelParts;
-
+	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<AActor>>Projectile;
+	float PlayTime;
+	static inline float hits;
+	static inline float GameSpeed;
+	static inline float ActorLife;
 	
 
 private:
-	float PlayTime;
 	float timer;
-	float cooldown = 1.f;
+	float projTimer;
+	float spawnTime = 1.f;
+	
 	int randomNumber;
 	int controllNumber;
+	int randomPlatform;
+	int randomProjectile;
+	
 	
 
 
@@ -34,9 +43,14 @@ protected:
 	virtual void BeginPlay() override;
 	
 	
-public:	
+	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void Platforms();
+
+	virtual void Projectiles();
 	
 
 };

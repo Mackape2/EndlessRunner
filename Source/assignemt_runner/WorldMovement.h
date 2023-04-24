@@ -15,10 +15,9 @@ class ASSIGNEMT_RUNNER_API AWorldMovement : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AWorldMovement();
-	FVector CurrentLocation;
-	float speed;
-
+	
 private:
+	FVector CurrentLocation;
 	float time;
 	float death = 5.f;
 
@@ -30,8 +29,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION()
-	virtual void AReleased();
+	
 	
 	
 };

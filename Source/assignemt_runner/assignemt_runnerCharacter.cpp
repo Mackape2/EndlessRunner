@@ -56,6 +56,7 @@ void Aassignemt_runnerCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	startLocation = this->GetActorLocation();
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -63,6 +64,16 @@ void Aassignemt_runnerCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+	}
+}
+
+void Aassignemt_runnerCharacter::Tick(float DeltaTime)
+{
+	currentLocation = GetActorLocation();
+	if(currentLocation.X != startLocation.X)
+	{
+		currentLocation.X = startLocation.X;
+		SetActorLocation(currentLocation);
 	}
 }
 
@@ -75,15 +86,13 @@ void Aassignemt_runnerCharacter::SetupPlayerInputComponent(class UInputComponent
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		
 		//Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		//Commented out if I wish to use the jump during part two
+		// EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		// EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		//Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &Aassignemt_runnerCharacter::Move);
-
-		//Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &Aassignemt_runnerCharacter::Look);
-
+		
 	}
 
 }
@@ -106,21 +115,8 @@ void Aassignemt_runnerCharacter::Move(const FInputActionValue& Value)
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		// add movement 
-		AddMovementInput(ForwardDirection, MovementVector.Y);
+		//AddMovementInput(ForwardDirection, MovementVector.Y);
 		AddMovementInput(RightDirection, MovementVector.X);
-	}
-}
-
-void Aassignemt_runnerCharacter::Look(const FInputActionValue& Value)
-{
-	// input is a Vector2D
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
-
-	if (Controller != nullptr)
-	{
-		// add yaw and pitch input to controller
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
 

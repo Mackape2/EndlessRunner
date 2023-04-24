@@ -2,10 +2,8 @@
 
 
 #include "WorldMovement.h"
-#include "InputCoreTypes.h"
-#include "Kismet/KismetMathLibrary.h"
-#include "assignemt_runnerCharacter.h"
-#include "InputTriggers.h"
+
+#include "PlatformManager.h"
 
 
 // Sets default values
@@ -21,15 +19,8 @@ AWorldMovement::AWorldMovement()
 void AWorldMovement::BeginPlay()
 {
 	Super::BeginPlay();
-	check(InputComponent);
-	InputComponent->BindAction("APressed", IE_Released ,this ,AWorldMovement::AReleased());
 	CurrentLocation = this->GetActorLocation();
 	
-}
-
-void AWorldMovement::AReleased()
-{
-	CurrentLocation.Y += 300.f;
 }
 
 
@@ -39,11 +30,10 @@ void AWorldMovement::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	time += DeltaTime;
 	
-	CurrentLocation.X += speed;
+	CurrentLocation.X += 1.f * APlatformManager::GameSpeed;
 
 	SetActorLocation(CurrentLocation);
 	
-
 	
 	if(time >= death)
 		Destroy();
