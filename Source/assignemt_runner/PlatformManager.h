@@ -23,6 +23,7 @@ public:
 	static inline float hits;
 	static inline float GameSpeed;
 	static inline float ActorLife;
+	static inline bool SpawnExplotion;
 	
 
 private:
@@ -34,6 +35,7 @@ private:
 	int controllNumber;
 	int randomPlatform;
 	int randomProjectile;
+
 	
 	
 
@@ -51,6 +53,8 @@ public:
 	virtual void Platforms();
 
 	virtual void Projectiles();
+
+	static void Explode(); 
 	
 
 };

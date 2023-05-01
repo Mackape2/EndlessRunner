@@ -3,7 +3,7 @@
 
 #include "PlatformManager.h"
 
-
+#include "RegularProjectile.h"
 
 
 // Sets default values
@@ -70,5 +70,20 @@ void APlatformManager::Projectiles()
 		randomNumber = FMath::RandRange(0,35);
 	}
 	controllNumber = randomNumber;
-	GetWorld()->SpawnActor<AActor>(Projectile[randomProjectile], FVector(-1500,randomNumber * 100,100),FRotator::ZeroRotator);
+	
+	if(AActor* Actor = Cast<AActor>(GetWorld()->SpawnActor<AActor>(Projectile[randomProjectile], FVector(-1500,randomNumber * 100,100),FRotator::ZeroRotator)))
+	{
+		if(SpawnExplotion)
+		{
+			
+			
+		}
+	}
 }
+
+void APlatformManager::Explode()
+{
+	SpawnExplotion = true;
+	
+}
+
